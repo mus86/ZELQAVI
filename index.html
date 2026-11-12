@@ -43,13 +43,49 @@
  <div class="panel auth-box"><div class="tabs"><button id="customerTab" class="active" onclick="setAuthMode('customer')">Customer Login</button><button id="adminTab" class="outline" onclick="setAuthMode('admin')">Admin Login</button><button id="signupTab" class="outline" onclick="setAuthMode('signup')">Create Account</button></div>
  <div id="authModeLabel" class="admin-label">CUSTOMER LOGIN</div><div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="your@email.com"></div><div class="field"><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 6 characters"></div>
  <div class="actions"><button id="authAction" onclick="authAction()">Login</button><button class="outline" onclick="resetPassword()">Forgot password?</button><button class="outline hidden" id="logoutBtn" onclick="logout()">Logout</button></div><div id="authMsg"></div><p class="muted">Admin login uses the same secure Supabase account, but only an account assigned the admin role can open the dashboard.</p>
- </div>
+</div>
 </section>
-<section class="band hidden" id="customerDashboard"><div class="section-head"><h2>My <span class="gold">Orders</span></h2><p>Your order history and payment status.</p></div><div class="panel"><div id="myOrders"></div></div></section>
-<section class="hidden" id="adminDashboard"><div class="section-head"><h2>Admin <span class="gold">Dashboard</span></h2><p>Review orders, receipts and update customer order status.</p></div><div class="panel"><div class="actions"><button onclick="loadAdminOrders()">Refresh Orders</button></div><div id="adminOrders"></div></div></section>
-<section class="band" id="contact"><div class="section-head"><h2>Contact <span class="gold">ZELQAVI</span></h2><p>MUHAMMAD UMAR — CEO & FOUNDER OF ZELQAVI WEB STUDIO</p></div><div class="panel" style="max-width:650px;margin:auto;text-align:center"><h3 class="gold">WhatsApp / JazzCash: 0327 7474086</h3><p>Email: m.umarshafique.86@gmail.com</p><div class="actions" style="justify-content:center"><a class="btn" href="https://wa.me/923277474086" target="_blank">Chat on WhatsApp</a><a class="btn outline" href="mailto:m.umarshafique.86@gmail.com">Email Us</a></div></div></section>
+
+<section class="band hidden" id="customerDashboard">
+<div class="section-head">
+<h2>My <span class="gold">Orders</span></h2>
+<p>Your order history and payment status.</p>
+</div>
+<div class="panel"><div id="myOrders"></div></div>
+</section>
+
+<section class="hidden" id="adminDashboard">
+<div class="section-head">
+<h2>Admin <span class="gold">Dashboard</span></h2>
+<p>Review orders, receipts and update customer order status.</p>
+</div>
+<div class="panel">
+<div class="actions"><button onclick="loadAdminOrders()">Refresh Orders</button></div>
+<div id="adminOrders"></div>
+</div>
+</section>
+
+<section class="band" id="contact">
+<div class="section-head">
+<h2>Contact <span class="gold">ZELQAVI</span></h2>
+<p>MUHAMMAD UMAR — CEO & FOUNDER OF ZELQAVI WEB STUDIO</p>
+</div>
+<div class="panel" style="max-width:650px;margin:auto;text-align:center">
+<h3 class="gold">WhatsApp / JazzCash: 0327 7474086</h3>
+<p>Email: m.umarshafique.86@gmail.com</p>
+<p>Email: zaid.xyz.786.86@gmail.com</p>
+<div class="actions" style="justify-content:center">
+<a class="btn" href="https://wa.me/923277474086" target="_blank">Chat on WhatsApp</a>
+<a class="btn outline" href="mailto:m.umarshafique.86@gmail.com">Email Us</a>
+</div>
+</div>
+</section>
 </main>
-<footer><b>ZELQAVI WEB STUDIO</b><p>We Design. We Develop. You Grow.</p><p>© <span id="year"></span> All Rights Reserved.</p></footer>
+<footer>
+<b>ZELQAVI WEB STUDIO</b>
+<p>We Design. We Develop. You Grow.</p>
+<p>© <span id="year"></span> All Rights Reserved.</p>
+</footer>
 <script>
 const SUPABASE_URL="https://auozgffhzjodavnbmqia.supabase.co";
 const SUPABASE_KEY="sb_publishable_owS91cuSBNZYwEBy2qVOpQ_ZvekN-XU";

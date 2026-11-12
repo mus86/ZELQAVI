@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZELQAVI WEB STUDIO | We Design. We Develop. You Grow.</title>
+<meta name="description" content="Professional website development and digital solutions by ZELQAVI WEB STUDIO.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--gold:#d6ad55;--bg:#08090c;--panel:#14161c;--muted:#aeb2bb;--line:#30333b;--silver:#d6d9df}
+*{box-sizing:border-box;scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f7f7f7;font-family:Arial,sans-serif;line-height:1.55}
+header{position:sticky;top:0;z-index:20;background:#090a0df2;border-bottom:1px solid #39332a;padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-weight:900;letter-spacing:2px;color:var(--gold);font-size:21px}.logo span{color:white}
+nav{display:flex;gap:15px;flex-wrap:wrap;align-items:center}nav a{color:#ddd;text-decoration:none;font-size:14px}nav a:hover{color:var(--gold)}
+button,.btn{border:0;border-radius:6px;padding:11px 17px;background:var(--gold);color:#111;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{filter:brightness(1.08)}button.secondary,.btn.secondary{background:transparent;border:1px solid var(--gold);color:var(--gold)}button.danger{background:#7f2c2c;color:white}button.small{padding:7px 10px;font-size:12px}
+.hero{min-height:590px;padding:65px 7%;display:flex;align-items:center;justify-content:space-between;gap:35px;background:radial-gradient(ellipse at 78% 48%,#80652b30,transparent 42%),linear-gradient(120deg,#08090c 35%,#191b21);overflow:hidden}
+.hero-copy{max-width:610px}.eyebrow{color:var(--gold);letter-spacing:4px;font-size:13px;font-weight:bold}
+h1{font-size:clamp(38px,6vw,66px);line-height:1.1;margin:16px 0}h1 span,.gold{color:var(--gold)}.hero p{color:#c5c5c5;font-size:17px}
+.tech-scene{width:420px;height:320px;position:relative;flex-shrink:0}.monitor{position:absolute;right:5px;top:5px;width:260px;height:185px;background:#20242c;border:9px solid #89909a;border-radius:10px;box-shadow:0 0 35px #d6ad5530}.screen{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#40351e,#101217 70%)}.screen b{font-size:25px;letter-spacing:3px;color:var(--gold)}.screen small{letter-spacing:2px}.stand{position:absolute;right:103px;top:190px;width:65px;height:48px;background:linear-gradient(90deg,#555,#c0c4ca,#555);clip-path:polygon(35% 0,65% 0,80% 100%,20% 100%)}.base{position:absolute;right:75px;top:235px;width:125px;height:10px;background:#aeb2b9;border-radius:50%}.laptop{position:absolute;left:5px;bottom:24px;width:230px;height:145px;background:#b6bbc2;padding:8px;border-radius:9px 9px 2px 2px;transform:perspective(400px) rotateY(8deg);box-shadow:0 0 30px #000}.laptop-screen{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#161b25,#514020);border:2px solid #555}.laptop-screen b{font-size:20px;color:var(--gold)}.laptop-base{position:absolute;bottom:10px;left:-8px;width:250px;height:13px;background:linear-gradient(#eee,#777);clip-path:polygon(5% 0,95% 0,100% 100%,0 100%)}
+section{padding:68px 7%}.section-title{text-align:center;margin-bottom:32px}.section-title h2{font-size:32px;margin:0}.section-title p{color:var(--muted);margin-top:7px}
+.portfolio,.about,.contact{background:#101217}.portfolio-card{max-width:850px;margin:auto;background:var(--panel);border:1px solid #4b402b;border-radius:12px;padding:25px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.portfolio-card p{color:#bbb;margin:5px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;min-height:230px}.card:hover{border-color:var(--gold);transform:translateY(-2px)}.symbol{font-size:29px}.card h3{color:var(--gold);margin:8px 0}.card p{color:#bbb;font-size:14px;flex:1}.price{font-weight:bold;margin:10px 0}.card button{width:100%}
+.estimator,.panel{max-width:850px;margin:auto;background:#17191f;border:1px solid #51452c;border-radius:12px;padding:25px}label{display:block;margin:12px 0 5px;color:#ddd}input,select,textarea{width:100%;padding:12px;background:#090a0e;color:white;border:1px solid #454852;border-radius:5px;font:inherit}textarea{min-height:100px;resize:vertical}.estimate-total{background:#292316;padding:16px;border-radius:7px;text-align:center;margin:18px 0}.estimate-total strong{font-size:28px;color:var(--gold)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.contact{text-align:center}.contact p{color:#bbb}.contact-number{font-size:22px;color:var(--gold);font-weight:bold}.payment{max-width:620px;margin:22px auto;padding:20px;border:1px solid #51452c;background:#17191e;border-radius:10px}
+.hidden{display:none!important}.cart-count{background:#2a2418;color:var(--gold);padding:3px 8px;border-radius:20px}.notice{padding:12px;border-radius:7px;background:#22251f;color:#d8e6ca;margin:12px 0}.error{background:#351e1e;color:#ffcaca}.muted{color:var(--muted)}.order-row{border:1px solid var(--line);background:#101217;border-radius:8px;padding:15px;margin:12px 0}.order-row h3{margin:0 0 5px;color:var(--gold)}.order-row p{margin:4px 0;color:#ccc}.status{display:inline-block;padding:3px 9px;border-radius:20px;background:#332b1c;color:#f0cd7c;font-size:12px}
+footer{text-align:center;padding:25px;background:#050608;color:#888;border-top:1px solid #333}footer strong{color:var(--gold)}
+.modal{position:fixed;inset:0;background:#000b;z-index:50;display:flex;align-items:center;justify-content:center;padding:15px;overflow:auto}.modal-box{width:min(650px,100%);max-height:92vh;overflow:auto;background:#14161c;border:1px solid #62502d;border-radius:12px;padding:22px}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.modal-head h2{color:var(--gold);margin:0}.close{background:#333;color:white;padding:6px 11px}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}th,td{text-align:left;padding:9px;border-bottom:1px solid #393b42;vertical-align:top}th{color:var(--gold)}
+@media(max-width:800px){header{justify-content:center}nav{justify-content:center}.hero{flex-direction:column;text-align:center;padding-top:45px}.tech-scene{transform:scale(.82);transform-origin:top center;margin-bottom:-40px}}
+@media(max-width:430px){.tech-scene{transform:scale(.67);margin-bottom:-90px}.portfolio-card{justify-content:center;text-align:center}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ZELQAVI <span>WEB STUDIO</span></div>
+  <nav>
+    <a href="#home">Home</a><a href="#portfolio">Portfolio</a><a href="#services">Services</a><a href="#contact">Contact</a>
+    <button class="secondary small" onclick="openCart()">Cart <span id="cartCount" class="cart-count">0</span></button>
+    <button class="small" id="accountBtn" onclick="openAccount()">Login / Signup</button>
+  </nav>
+</header>
+<main>
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <div class="eyebrow">WELCOME TO ZELQAVI</div>
+    <h1>We Design.<br>We Develop.<br><span>You Grow.</span></h1>
+    <p>Professional websites and digital solutions for businesses, brands and individuals. Share your idea, choose your services and place your order directly through our website.</p>
+    <div class="actions" style="justify-content:center"><a class="btn" href="#services">Explore Services</a><a class="btn secondary" href="#portfolio">Our Portfolio</a></div>
+  </div>
+  <div class="tech-scene" aria-label="Laptop and desktop PC">
+    <div class="monitor"><div class="screen"><b>ZELQAVI</b><small>WEB STUDIO</small></div></div><div class="stand"></div><div class="base"></div>
+    <div class="laptop"><div class="laptop-screen"><b>ZELQAVI</b><small>YOUR DIGITAL FUTURE</small></div></div><div class="laptop-base"></div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="section-title"><h2>Our <span class="gold">Portfolio</span></h2><p>Explore a live project created by our studio.</p></div>
+  <div class="portfolio-card"><div><h2 class="gold">ZELVO Online Store</h2><p>Online shopping website portfolio project.</p><p class="muted">Open the live website to explore its design and shopping experience.</p></div><a class="btn" href="https://zelvoshop.github.io/ZELVO/" target="_blank" rel="noopener">View ZELVO Website ↗</a></div>
+</section>
+
+<section id="services">
+  <div class="section-title"><h2>Our <span class="gold">Services</span></h2><p>Select a service to add it to your cart. You can explain your requirements at checkout.</p></div>
+  <div class="grid" id="serviceGrid"></div>
+</section>
+
+<section id="estimate" style="background:#0d0f13">
+  <div class="section-title"><h2>Website <span class="gold">Price Estimator</span></h2><p>Use this estimate as a starting point. Final price is confirmed after discussing the requirements.</p></div>
+  <div class="estimator">
+    <label for="estType">Website type</label><select id="estType">
+      <option value="12000">Simple Website — Rs. 12,000</option><option value="16000">Portfolio Website — Rs. 16,000</option>
+      <option value="20000">Business Website — Rs. 20,000</option><option value="25000">Restaurant / Bakery — Rs. 25,000</option>
+      <option value="30000">Education Website — Rs. 30,000</option><option value="35000">Blog / News — Rs. 35,000</option>
+      <option value="40000">E-commerce — Rs. 40,000</option><option value="42000">Booking / Real Estate — Rs. 42,000</option>
+      <option value="45000">Community / Video — Rs. 45,000</option><option value="50000">Custom Web App — Rs. 50,000</option>
+    </select>
+    <label for="estPages">Number of pages</label><select id="estPages"><option value="0">1–2 pages</option><option value="2000">3–5 pages (+ Rs. 2,000)</option><option value="4000">6–10 pages (+ Rs. 4,000)</option><option value="7000">More than 10 (+ Rs. 7,000)</option></select>
+    <label for="estFeatures">Extra features</label><select id="estFeatures"><option value="0">Basic features</option><option value="3000">Advanced design (+ Rs. 3,000)</option><option value="5000">Login / Dashboard (+ Rs. 5,000)</option><option value="8000">Advanced ordering system (+ Rs. 8,000)</option></select>
+    <div class="estimate-total">Estimated price<br><strong id="estTotal">Rs. 12,000</strong></div>
+    <button onclick="addEstimateToCart()">Add estimate to cart</button>
+  </div>
+</section>
+
+<section class="about">
+  <div class="section-title"><h2>About <span class="gold">Our Studio</span></h2><p>Creative ideas. Professional development. Digital growth.</p></div>
+  <p style="max-width:820px;margin:auto;text-align:center;color:#c6c6c6">ZELQAVI WEB STUDIO provides website development and digital solutions. We aim to create modern, responsive and user-friendly websites that help businesses and individuals build their online presence.</p>
+  <p style="text-align:center;margin-top:22px"><strong class="gold">MUHAMMAD UMAR</strong><br>CEO & FOUNDER OF ZELQAVI WEB STUDIO</p>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-title"><h2>Let's <span class="gold">Work Together</span></h2><p>Have a project idea? Contact our studio.</p></div>
+  <p>WhatsApp / JazzCash Number</p><div class="contact-number">0327 7474086</div><p>Email: m.umarshafique.86@gmail.com</p>
+  <div class="actions" style="justify-content:center"><a class="btn" href="https://wa.me/923277474086?text=Hello%20ZELQAVI%20WEB%20STUDIO" target="_blank" rel="noopener">Chat on WhatsApp</a><a class="btn secondary" href="mailto:m.umarshafique.86@gmail.com">Send Email</a></div>
+  <div class="payment"><h3 class="gold">JazzCash Payment</h3><p>JazzCash Number: <strong>0327 7474086</strong></p><p class="muted">Contact us on WhatsApp for payment instructions and confirm the account title before transferring. Payment is manually confirmed by the studio; this website does not process JazzCash automatically.</p></div>
+</section>
+
+<section id="customerArea" class="hidden">
+  <div class="section-title"><h2>My <span class="gold">Orders</span></h2><p>Your order history and current progress.</p></div>
+  <div class="panel"><div id="myOrders"></div></div>
+</section>
+
+<section id="adminArea" class="hidden">
+  <div class="section-title"><h2>Studio <span class="gold">Admin Dashboard</span></h2><p>Manage customer project requests and update their status.</p></div>
+  <div class="panel"><div class="actions"><button onclick="loadAdminOrders()">Refresh orders</button></div><div id="adminOrders"></div></div>
+</section>
+</main>
+<footer><strong>ZELQAVI WEB STUDIO</strong><p>We Design. We Develop. You Grow.</p><p>MUHAMMAD UMAR — CEO & FOUNDER</p><p>© <span id="year"></span> ZELQAVI WEB STUDIO. All Rights Reserved.</p></footer>
+
+<div class="modal hidden" id="accountModal"><div class="modal-box"><div class="modal-head"><h2>Customer Account</h2><button class="close" onclick="closeModal('accountModal')">✕</button></div>
+  <div id="authMessage"></div><label>Email</label><input id="authEmail" type="email" placeholder="your@email.com"><label>Password</label><input id="authPassword" type="password" placeholder="Password">
+  <div class="actions"><button onclick="signIn()">Login</button><button class="secondary" onclick="signUp()">Create account</button><button class="secondary" onclick="signOut()">Logout</button></div>
+  <p class="muted">After signup, check your email if Supabase email confirmation is enabled. Admin accounts are assigned separately in Supabase.</p>
+</div></div>
+
+<div class="modal hidden" id="cartModal"><div class="modal-box"><div class="modal-head"><h2>Your <span class="gold">Cart</span></h2><button class="close" onclick="closeModal('cartModal')">✕</button></div>
+  <div id="cartContents"></div><div id="checkoutArea" class="hidden"><hr style="border-color:#393b42">
+  <h3 class="gold">Checkout — Project Details</h3><p class="muted">Login is required before placing an order.</p>
+  <label>Your name</label><input id="customerName" placeholder="Full name"><label>Phone / WhatsApp</label><input id="customerPhone" placeholder="03xxxxxxxxx"><label>Business / project name</label><input id="businessName" placeholder="Optional"><label>Website or service requirements</label><textarea id="requirements" placeholder="Tell us what website you need, pages, features, design preferences, etc."></textarea>
+  <label>Preferred payment method</label><select id="paymentMethod"><option>Discuss on WhatsApp</option><option>JazzCash (manual confirmation)</option></select>
+  <div class="actions"><button onclick="placeOrder()">Place Order</button></div><div id="checkoutMessage"></div></div>
+</div></div>
+
+<script>
+/* Supabase public browser configuration. Keep RLS enabled; never put service_role keys here. */
+const SUPABASE_URL = "https://auozgffhzjodavnbmqia.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_owS91cuSBNZYwEBy2qVOpQ_ZvekN-XU";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const services = [
+ ["simple","🌐","Simple Website","Personal website or basic 1–2 page website.",12000],
+ ["business","💼","Business Website","Professional website for a company or local business.",20000],
+ ["portfolio","👨‍💻","Portfolio Website","Showcase your skills, projects and professional profile.",16000],
+ ["ecommerce","🛒","E-commerce Store","Online shop with product catalog, cart and order features.",40000],
+ ["restaurant","🍔","Restaurant & Bakery","Digital menu, food ordering and delivery information.",25000],
+ ["education","🎓","Education Website","School, college, academy or learning website.",30000],
+ ["realestate","🏠","Real Estate Website","Property listings, details and customer inquiries.",42000],
+ ["booking","📅","Booking Website","Appointment, reservation and booking system.",42000],
+ ["blog","📰","Blog & News Website","Publish articles, updates and news online.",35000],
+ ["community","👥","Community Website","Community platforms and social-style web experiences.",45000],
+ ["video","🎬","Video Website","Video library or video-sharing website project.",45000],
+ ["custom","⚙️","Custom Web Application","Custom dashboards, tools and web-based systems.",50000],
+ ["pcsetup","💻","Laptop & PC Setup","Windows setup, software installation, drivers and basic troubleshooting.",0]
+];
+let cart = JSON.parse(localStorage.getItem("zelqavi_cart") || "[]");
+let currentUser = null;
+let currentRole = "customer";
+const money = n => "Rs. " + Number(n||0).toLocaleString("en-PK");
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderServices(){
+ document.getElementById("serviceGrid").innerHTML = services.map(s=>`<article class="card"><div class="symbol">${s[1]}</div><h3>${s[2]}</h3><p>${s[3]}</p><div class="price">${s[4] ? "Starting "+money(s[4]) : "Contact for pricing"}</div><button onclick="addToCart('${s[0]}')">Add to Cart</button></article>`).join("");
+}
+function saveCart(){localStorage.setItem("zelqavi_cart",JSON.stringify(cart));document.getElementById("cartCount").textContent=cart.reduce((n,x)=>n+x.qty,0);}
+function addToCart(id,priceOverride){
+ const s=services.find(x=>x[0]===id);if(!s)return;
+ const existing=cart.find(x=>x.id===id);
+ if(existing){existing.qty++;if(priceOverride!==undefined)existing.price=priceOverride;}
+ else cart.push({id,name:s[2],price:priceOverride!==undefined?priceOverride:s[4],qty:1,description:s[3]});
+ saveCart();alert(s[2]+" added to cart.");
+}
+function changeQty(id,delta){const x=cart.find(x=>x.id===id);if(!x)return;x.qty+=delta;if(x.qty<=0)cart=cart.filter(a=>a.id!==id);saveCart();renderCart();}
+function removeCart(id){cart=cart.filter(x=>x.id!==id);saveCart();renderCart();}
+function cartTotal(){return cart.reduce((n,x)=>n+(Number(x.price)||0)*x.qty,0);}
+function openCart(){renderCart();document.getElementById("cartModal").classList.remove("hidden");}
+function renderCart(){
+ const box=document.getElementById("cartContents");
+ if(!cart.length){box.innerHTML='<p class="muted">Your cart is empty. Add a service to continue.</p>';document.getElementById("checkoutArea").classList.add("hidden");return;}
+ box.innerHTML=cart.map(x=>`<div class="order-row"><h3>${esc(x.name)}</h3><p>${money(x.price)} × ${x.qty}</p><div class="actions"><button class="small secondary" onclick="changeQty('${x.id}',-1)">−</button><button class="small secondary" onclick="changeQty('${x.id}',1)">+</button><button class="small danger" onclick="removeCart('${x.id}')">Remove</button></div></div>`).join("")+`<h3 class="gold">Total: ${money(cartTotal())}</h3>`;
+ document.getElementById("checkoutArea").classList.remove("hidden");
+}
+function openAccount(){document.getElementById("accountModal").classList.remove("hidden");}
+function closeModal(id){document.getElementById(id).classList.add("hidden");}
+function message(id,text,isError=false){const el=document.getElementById(id);el.innerHTML=`<div class="notice ${isError?'error':''}">${esc(text)}</div>`;}
+async function signUp(){
+ const email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value;
+ if(!email||password.length<6){message("authMessage","Enter a valid email and password of at least 6 characters.",true);return;}
+ const {error}=await db.auth.signUp({email,password});
+ if(error)message("authMessage",error.message,true);else message("authMessage","Account created. Check your email if confirmation is required, then log in.");
+}
+async function signIn(){
+ const email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value;
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error)message("authMessage",error.message,true);else{await refreshSession();message("authMessage","Logged in successfully.");}
+}
+async function signOut(){const {error}=await db.auth.signOut();if(error)message("authMessage",error.message,true);else{currentUser=null;currentRole="customer";refreshUI();message("authMessage","Logged out.");}}
+async function refreshSession(){
+ const {data}=await db.auth.getSession();currentUser=data.session?.user||null;currentRole="customer";
+ if(currentUser){const {data:p}=await db.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();if(p?.role==="admin")currentRole="admin";}
+ refreshUI();
+}
+function refreshUI(){
+ const btn=document.getElementById("accountBtn");btn.textContent=currentUser?(currentRole==="admin"?"Admin Account":"My Account"):"Login / Signup";
+ document.getElementById("customerArea").classList.toggle("hidden",!currentUser);
+ document.getElementById("adminArea").classList.toggle("hidden",!(currentUser&&currentRole==="admin"));
+ if(currentUser){loadMyOrders();if(currentRole==="admin")loadAdminOrders();}
+}
+async function placeOrder(){
+ if(!currentUser){closeModal("cartModal");openAccount();message("authMessage","Login or create your customer account, then open the cart again to place your order.");return;}
+ if(!cart.length){message("checkoutMessage","Your cart is empty.",true);return;}
+ const name=document.getElementById("customerName").value.trim(),phone=document.getElementById("customerPhone").value.trim();
+ const business=document.getElementById("businessName").value.trim(),requirements=document.getElementById("requirements").value.trim();
+ if(!name||!phone||!requirements){message("checkoutMessage","Please enter your name, phone number and project requirements.",true);return;}
+ const payload={customer_id:currentUser.id,customer_email:currentUser.email,customer_name:name,phone,business_name:business,requirements,
+ items:cart.map(x=>({id:x.id,name:x.name,unit_price:x.price,quantity:x.qty,description:x.description})),
+ total:cartTotal(),payment_method:document.getElementById("paymentMethod").value,status:"New",payment_status:"Unpaid"};
+ const {data,error}=await db.from("studio_orders").insert(payload).select().single();
+ if(error){message("checkoutMessage","Order could not be submitted: "+error.message,true);return;}
+ const orderId=data.id;cart=[];saveCart();renderCart();message("checkoutMessage","Order submitted successfully. Order ID: "+orderId);
+ await loadMyOrders();
+ const msg=`New ZELQAVI order ${orderId}\nCustomer: ${name}\nPhone: ${phone}\nTotal: ${money(payload.total)}\nPlease review it in the admin dashboard.`;
+ window.open("https://wa.me/923277474086?text="+encodeURIComponent(msg),"_blank");
+}
+function orderCard(o,admin=false){
+ const items=Array.isArray(o.items)?o.items:[];
+ const itemText=items.map(x=>`${x.name} × ${x.quantity} (${money(x.unit_price)})`).join("<br>");
+ return `<div class="order-row"><h3>Order #${esc(String(o.id).slice(0,8))}</h3><p><span class="status">${esc(o.status)}</span> · ${esc(new Date(o.created_at).toLocaleString())}</p>
+ ${admin?`<p><b>Customer:</b> ${esc(o.customer_name)} · ${esc(o.customer_email)} · ${esc(o.phone)}</p><p><b>Business:</b> ${esc(o.business_name||"Not specified")}</p>`:""}
+ <p><b>Items:</b><br>${itemText||"No item details"}</p><p><b>Requirements:</b> ${esc(o.requirements)}</p><p><b>Total:</b> ${money(o.total)} · <b>Payment:</b> ${esc(o.payment_method)} / ${esc(o.payment_status||"Unpaid")}</p>
+ ${admin?`<label>Update order status</label><select id="status-${esc(o.id)}"><option ${o.status==="New"?"selected":""}>New</option><option ${o.status==="Pending"?"selected":""}>Pending</option><option ${o.status==="In Progress"?"selected":""}>In Progress</option><option ${o.status==="Completed"?"selected":""}>Completed</option><option ${o.status==="Cancelled"?"selected":""}>Cancelled</option></select><div class="actions"><button class="small" onclick="updateStatus('${esc(o.id)}')">Save status</button><a class="btn secondary small" href="https://wa.me/${String(o.phone||"").replace(/\D/g,"")}?text=${encodeURIComponent("Update on your ZELQAVI project order: "+o.status)}" target="_blank">WhatsApp customer</a></div>`:""}
+ </div>`;
+}
+async function loadMyOrders(){
+ if(!currentUser)return;const el=document.getElementById("myOrders");el.innerHTML="Loading your orders...";
+ const {data,error}=await db.from("studio_orders").select("*").eq("customer_id",currentUser.id).order("created_at",{ascending:false});
+ if(error){el.innerHTML=`<div class="notice error">${esc(error.message)}</div>`;return;}
+ el.innerHTML=data.length?data.map(o=>orderCard(o,false)).join(""):"<p class='muted'>You have not placed any orders yet.</p>";
+}
+async function loadAdminOrders(){
+ if(!currentUser||currentRole!=="admin")return;const el=document.getElementById("adminOrders");el.innerHTML="Loading orders...";
+ const {data,error}=await db.from("studio_orders").select("*").order("created_at",{ascending:false});
+ if(error){el.innerHTML=`<div class="notice error">${esc(error.message)}</div>`;return;}
+ el.innerHTML=data.length?data.map(o=>orderCard(o,true)).join(""):"<p class='muted'>No orders received yet.</p>";
+}
+async function updateStatus(id){
+ const status=document.getElementById("status-"+id).value;
+ const {error}=await db.from("studio_orders").update({status}).eq("id",id);
+ if(error){alert("Could not update: "+error.message);return;}alert("Order status updated.");loadAdminOrders();
+}
+function calcEstimate(){const n=Number(document.getElementById("estType").value)+Number(document.getElementById("estPages").value)+Number(document.getElementById("estFeatures").value);document.getElementById("estTotal").textContent=money(n);return n;}
+["estType","estPages","estFeatures"].forEach(id=>document.getElementById(id).addEventListener("change",calcEstimate));
+function addEstimateToCart(){const t=document.getElementById("estType"),p=document.getElementById("estPages"),f=document.getElementById("estFeatures");const n=calcEstimate(),label=t.options[t.selectedIndex].text;cart.push({id:"custom-estimate-"+Date.now(),name:"Custom website estimate — "+label,price:n,qty:1,description:"Pages: "+p.options[p.selectedIndex].text+"; Extra features: "+f.options[f.selectedIndex].text});saveCart();alert("Estimate added to cart.");}
+document.getElementById("year").textContent=new Date().getFullYear();
+renderServices();saveCart();refreshSession();
+db.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;setTimeout(refreshSession,0);});
+</script>
+</body>
+</html>

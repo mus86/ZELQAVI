@@ -438,49 +438,59 @@ function saveCart(){
  localStorage.setItem("zelqavi_cart_v2",JSON.stringify(cart));
  document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);
 }
+
 function addCart(id){
  const s=services.find(x=>x[0]===id);
- if(!s||!s[4])return;
- const item=cart.find(x=>x.id===id);
- if(item)item.qty++;
- else cart.push({id:s[0],name:s[2],price:s[4],qty:1,description:s[3]});
- document.getElementById("orderSuccessNotice").classList.add("hidden");
- saveCart();renderCart();location.hash="#cart";
-}
-function qty(id,n){
- const item=cart.find(x=>x.id===id);if(!item)return;
- item.qty+=n;if(item.qty<1)cart=cart.filter(x=>x.id!==id);
- saveCart();renderCart();
-}
-function removeItem(id){cart=cart.filter(x=>x.id!==id);saveCart();renderCart()}
-function clearCart(){cart=[];saveCart();renderCart()}
-function total(){return cart.reduce((a,x)=>a+Number(x.price||0)*x.qty,0)}
+ if(!s || !s[4]) return;
 
-function populateProjectTypes(){
- document.getElementById("projectType").innerHTML=services.filter(s=>s[0]!=="pcsetup").map(s=>`<option value="${s[0]}">${s[2]} — ${money(s[4])}</option>`).join("");
- calculateProjectPrice();
-}
-function calculateProjectPrice(){
- const service=services.find(s=>s[0]===document.getElementById("projectType").value);
- if(!service)return;
- const pages=Math.max(1,Math.min(50,parseInt(document.getElementById("pageCount").value)||1));
- let price=Number(service[4])+Math.max(0,pages-5)*1500;
- const design=document.getElementById("designLevel").value;
- if(design==="Premium")price+=5000;
- if(design==="Luxury")price+=10000;
- const features=[...document.querySelectorAll(".project-feature:checked")];
- features.forEach(f=>price+=Number(f.dataset.price));
- document.getElementById("projectPrice").textContent=money(price);
- return {service,pages,design,features:features.map(f=>({name:f.value,price:Number(f.dataset.price)})),price};
-}
-function addConfiguredProject(){
- const c=calculateProjectPrice();if(!c)return;
- const description=["Website: "+c.service[2],"Pages: "+c.pages,"Design: "+c.design,"Features: "+(c.features.map(f=>f.name).join(", ")||"No extra features")].join(" | ");
- cart.push({id:"custom-"+Date.now(),name:c.service[2]+" (Customized)",price:c.price,qty:1,description});
+ const existing=cart.find(x=>x.id===id);
+
+ if(existing){
+  existing.qty++;
+ }else{
+  cart.push({
+   id:s[0],
+   name:s[2],
+   price:Number(s[4]),
+   qty:1,
+   description:s[3]
+  });
+ }
+
  document.getElementById("orderSuccessNotice").classList.add("hidden");
- saveCart();renderCart();
- say("projectConfigMsg","Customized website added to cart successfully!");
+ saveCart();
+ renderCart();
+ location.hash="#cart";
 }
+
+function addConfiguredProject(){
+ const c=calculateProjectPrice();
+ if(!c) return;
+
+ const description=[
+  "Website Type: "+c.service[2],
+  "Number of Pages: "+c.pages,
+  "Design: "+c.design,
+  "Additional Features: "+(
+   c.features.map(f=>f.name+" ("+money(f.price)+")").join(", ") || "None"
+  )
+ ].join(" | ");
+
+ cart.push({
+  id:"custom-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+  name:c.service[2]+" (Customized)",
+  price:Number(c.price),
+  qty:1,
+  description:description
+ });
+
+ document.getElementById("orderSuccessNotice").classList.add("hidden");
+ saveCart();
+ renderCart();
+ say("projectConfigMsg","Your customized "+c.service[2]+" has been added to cart!");
+ location.hash="#cart";
+}
+
 function renderCart(){
  document.getElementById("cartItems").innerHTML=cart.length?cart.map(x=>`
  <div class="cart-item">
@@ -688,6 +698,57 @@ async function updateOrder(id){
  const {error}=await db.from("studio_orders").update({status,payment_status}).eq("id",id);
  if(error){alert(error.message);return}
  alert("Order updated successfully.");loadAdminOrders();
+}
+
+function populateProjectTypes(){
+ const select=document.getElementById("projectType");
+ select.innerHTML=services
+  .filter(s=>s[0]!=="pcsetup")
+  .map(s=>`<option value="${s[0]}">${s[2]} — ${money(s[4])}</option>`)
+  .join("");
+ calculateProjectPrice();
+}
+
+function calculateProjectPrice(){
+ const type=document.getElementById("projectType").value;
+ const service=services.find(s=>s[0]===type);
+
+ if(!service){
+  return null;
+ }
+
+ let pages=parseInt(document.getElementById("pageCount").value,10);
+ if(!Number.isFinite(pages)) pages=5;
+ pages=Math.max(1,Math.min(50,pages));
+ document.getElementById("pageCount").value=pages;
+
+ const design=document.getElementById("designLevel").value;
+ let price=Number(service[4]);
+
+ if(pages>5){
+  price+=(pages-5)*1500;
+ }
+
+ if(design==="Premium") price+=5000;
+ if(design==="Luxury") price+=10000;
+
+ const features=[...document.querySelectorAll(".project-feature:checked")]
+  .map(el=>({
+   name:el.value,
+   price:Number(el.dataset.price||0)
+  }));
+
+ features.forEach(f=>price+=f.price);
+
+ document.getElementById("projectPrice").textContent=money(price);
+
+ return {service,pages,design,features,price};
+}
+
+function total(){
+ return cart.reduce((sum,item)=>{
+  return sum+(Number(item.price)||0)*(Number(item.qty)||1);
+ },0);
 }
 
 document.getElementById("year").textContent=new Date().getFullYear();

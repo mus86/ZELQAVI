@@ -839,9 +839,8 @@ async function placeOrder(){
   document.getElementById("checkoutMsg").innerHTML="";
   document.getElementById("orderSuccessNotice").classList.remove("hidden");
 
-  say("checkoutMsg","Order submitted successfully! Your order ID is "+ins.data.id+".");
-  location.hash="#my-orders";
-  await loadMyOrders();
+ say("checkoutMsg","Order submitted successfully! Your order ID is "+ins.data.id+".");
+navigate("my-orders");
 
  }catch(e){
   if(uploadedPath)await db.storage.from(BUCKET).remove([uploadedPath]);

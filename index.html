@@ -81,47 +81,29 @@ textarea{min-height:100px}
  padding:15px;border:1px solid var(--line);border-radius:9px;
  margin:10px 0;background:#0e1219;overflow-wrap:anywhere
 }
-
-/* Separate order cards in Admin Dashboard */
 .order{
- display:block;
- padding:22px;
- border:1px solid var(--gold);
- border-radius:12px;
- margin:20px 0;
+ display:block;padding:22px;border:1px solid var(--gold);
+ border-radius:12px;margin:20px 0;
  background:linear-gradient(145deg,#171d28,#0d1119);
- overflow-wrap:anywhere;
- box-shadow:0 5px 18px #0005;
+ overflow-wrap:anywhere;box-shadow:0 5px 18px #0005
 }
 .order h3{color:var(--gold);margin:0 0 10px}
 .order p{margin:9px 0}
 .order-divider{border:0;border-top:1px solid #42404a;margin:16px 0}
 .order-items{
- background:#0a0e15;
- border:1px solid #303744;
- border-radius:8px;
- padding:12px;
- margin:12px 0;
+ background:#0a0e15;border:1px solid #303744;
+ border-radius:8px;padding:12px;margin:12px 0
 }
-.order-item{
- padding:10px 5px;
- border-bottom:1px solid #303744;
-}
+.order-item{padding:10px 5px;border-bottom:1px solid #303744}
 .order-item:last-child{border-bottom:0}
 .order-total{
- background:#292315;
- border:1px solid #6f5a2e;
- padding:13px;
- border-radius:8px;
- margin:15px 0;
+ background:#292315;border:1px solid #6f5a2e;
+ padding:13px;border-radius:8px;margin:15px 0
 }
 .order-total strong{font-size:24px;color:var(--gold)}
 .admin-order-heading{
- display:flex;
- justify-content:space-between;
- align-items:center;
- flex-wrap:wrap;
- gap:10px;
+ display:flex;justify-content:space-between;
+ align-items:center;flex-wrap:wrap;gap:10px
 }
 .total{font-size:25px;color:var(--gold);font-weight:bold}
 .notice{padding:12px;border-radius:8px;background:#1e2a20;color:#cde9cf;margin:12px 0}
@@ -154,6 +136,7 @@ footer b{color:var(--gold)}
   <a href="#portfolio" data-page="portfolio">Portfolio</a>
   <a href="#cart" data-page="cart">Cart (<span id="cartCount">0</span>)</a>
   <a href="#account" data-page="account" id="accountNav">Login</a>
+  <a href="#my-orders" data-page="my-orders" id="myOrdersNav" style="display:none">My Orders</a>
   <a href="#contact" data-page="contact">Contact</a>
  </nav>
 </header>
@@ -194,7 +177,7 @@ footer b{color:var(--gold)}
    <h2 class="gold">ZELVO Online Store</h2>
    <p class="muted">E-commerce website project.</p>
   </div>
-  <a class="btn" href="https://mus86.github.io/ZELVO/" target="_blank" rel="noopener">Visit Live Project</a>
+  <a class="btn" href="https://mus86.github.io/ZELVO/" target="_blank" rel="noopener noreferrer">Visit Live Project</a>
  </div>
 </section>
 
@@ -309,8 +292,8 @@ footer b{color:var(--gold)}
   <p>You will be informed about your order progress through our website and WhatsApp.</p>
   <p class="muted">For more details, please contact us through WhatsApp or email.</p>
   <div class="actions">
-   <a class="btn" href="https://wa.me/923277474086" target="_blank" rel="noopener">Contact with WhatsApp — 03277474086</a>
-   <a class="btn outline" href="mailto:zaid.xyz.786.86@gmail.com?subject=ZELQAVI%20Order%20Further%20Details">Send Email for Further Details</a>
+   <a class="btn" href="https://wa.me/923277474086" target="_blank" rel="noopener noreferrer">Contact with WhatsApp — 03277474086</a>
+   <a class="btn outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=zaid.xyz.786.86@gmail.com&su=ZELQAVI%20Order%20Further%20Details" target="_blank" rel="noopener noreferrer">Send Email for Further Details</a>
   </div>
  </div>
 </section>
@@ -360,7 +343,10 @@ footer b{color:var(--gold)}
   <h2>My <span class="gold">Orders</span></h2>
   <p class="muted">Your submitted project orders.</p>
  </div>
- <div class="panel"><div id="myOrders"></div></div>
+ <div class="panel">
+  <button class="outline" onclick="loadMyOrders()">Refresh My Orders</button>
+  <div id="myOrders"></div>
+ </div>
 </section>
 
 <section class="page hidden" id="adminDashboard">
@@ -384,8 +370,9 @@ footer b{color:var(--gold)}
   <p>Email: m.umarshafique.86@gmail.com</p>
   <p>Email: zaid.xyz.786.86@gmail.com</p>
   <div class="actions" style="justify-content:center">
-   <a class="btn" href="https://wa.me/923277474086" target="_blank" rel="noopener">Chat on WhatsApp</a>
-   <a class="btn outline" href="mailto:zaid.xyz.786.86@gmail.com">Send Email</a>
+   <a class="btn" href="https://wa.me/923277474086" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+   <a class="btn outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=m.umarshafique.86@gmail.com" target="_blank" rel="noopener noreferrer">Email Muhammad Umar</a>
+   <a class="btn outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=zaid.xyz.786.86@gmail.com" target="_blank" rel="noopener noreferrer">Send Email</a>
   </div>
  </div>
 </section>
@@ -456,9 +443,7 @@ try{
    price:Number(x.price)||0
   }));
  }
-}catch(e){
- cart=[];
-}
+}catch(e){cart=[];}
 
 function say(id,msg,bad=false){
  const el=document.getElementById(id);
@@ -467,18 +452,12 @@ function say(id,msg,bad=false){
 }
 
 function total(){
- return cart.reduce((sum,item)=>{
-  return sum+(Number(item.price)||0)*(Number(item.qty)||1);
- },0);
+ return cart.reduce((sum,item)=>sum+(Number(item.price)||0)*(Number(item.qty)||1),0);
 }
 
 function saveCart(){
- try{
-  localStorage.setItem("zelqavi_cart_v2",JSON.stringify(cart));
- }catch(e){
-  console.error("Cart could not be saved:",e);
- }
-
+ try{localStorage.setItem("zelqavi_cart_v2",JSON.stringify(cart));}
+ catch(e){console.error("Cart could not be saved:",e);}
  const count=cart.reduce((a,x)=>a+(Number(x.qty)||1),0);
  document.getElementById("cartCount").textContent=count;
 }
@@ -488,13 +467,10 @@ function navigate(page){
  if(!pageIds.includes(target))return;
 
  if(target==="customerDashboard"&&(!user||role!=="customer")){
-  location.hash="#account";
-  return;
+  location.hash="#account";return;
  }
-
  if(target==="adminDashboard"&&(!user||role!=="admin")){
-  location.hash="#account";
-  return;
+  location.hash="#account";return;
  }
 
  pageIds.forEach(id=>{
@@ -516,20 +492,14 @@ function handleRoute(){
  const target=routeNames[page]||page;
 
  if(!pageIds.includes(target)){
-  location.hash="#home";
-  return;
+  location.hash="#home";return;
  }
-
  if(target==="customerDashboard"&&(!user||role!=="customer")){
-  location.hash="#account";
-  return;
+  location.hash="#account";return;
  }
-
  if(target==="adminDashboard"&&(!user||role!=="admin")){
-  location.hash="#account";
-  return;
+  location.hash="#account";return;
  }
-
  navigate(page);
 }
 
@@ -553,36 +523,18 @@ function renderServices(){
 function addCart(id){
  const s=services.find(x=>x[0]===id);
  if(!s||!s[4])return;
-
  const existing=cart.find(x=>x.id===id);
 
- if(existing){
-  existing.qty=Math.max(1,Number(existing.qty)||1)+1;
- }else{
-  cart.push({
-   id:s[0],
-   name:s[2],
-   price:Number(s[4]),
-   qty:1,
-   description:s[3]
-  });
- }
+ if(existing)existing.qty=Math.max(1,Number(existing.qty)||1)+1;
+ else cart.push({id:s[0],name:s[2],price:Number(s[4]),qty:1,description:s[3]});
 
  document.getElementById("orderSuccessNotice").classList.add("hidden");
-
- saveCart();
- renderCart();
+ saveCart();renderCart();
 
  const btn=document.getElementById("add-"+id);
-
  if(btn){
-  btn.textContent="Added to Cart ✓";
-  btn.disabled=true;
-
-  setTimeout(()=>{
-   btn.textContent="Add to Cart";
-   btn.disabled=false;
-  },1300);
+  btn.textContent="Added to Cart ✓";btn.disabled=true;
+  setTimeout(()=>{btn.textContent="Add to Cart";btn.disabled=false;},1300);
  }
 }
 
@@ -594,75 +546,48 @@ function addConfiguredProject(){
   "Website Type: "+c.service[2],
   "Number of Pages: "+c.pages,
   "Design: "+c.design,
-  "Additional Features: "+
-  (c.features.map(f=>f.name+" ("+money(f.price)+")").join(", ")||"None")
+  "Additional Features: "+(c.features.map(f=>f.name+" ("+money(f.price)+")").join(", ")||"None")
  ].join(" | ");
 
  cart.push({
   id:"custom-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
   name:c.service[2]+" (Customized)",
-  price:Number(c.price),
-  qty:1,
-  description:description
+  price:Number(c.price),qty:1,description
  });
 
  document.getElementById("orderSuccessNotice").classList.add("hidden");
-
- saveCart();
- renderCart();
-
+ saveCart();renderCart();
  say("projectConfigMsg","Added to Cart Successfully ✓");
 
  const btn=document.getElementById("customAddButton");
- btn.textContent="Added to Cart ✓";
- btn.disabled=true;
-
- setTimeout(()=>{
-  btn.textContent="Add Customized Website to Cart";
-  btn.disabled=false;
- },1500);
+ btn.textContent="Added to Cart ✓";btn.disabled=true;
+ setTimeout(()=>{btn.textContent="Add Customized Website to Cart";btn.disabled=false;},1500);
 }
 
 function qty(id,change){
  const item=cart.find(x=>String(x.id)===String(id));
  if(!item)return;
-
  const nextQty=(Number(item.qty)||1)+Number(change);
-
- if(nextQty<=0){
-  removeItem(id);
-  return;
- }
-
- item.qty=nextQty;
- saveCart();
- renderCart();
+ if(nextQty<=0){removeItem(id);return;}
+ item.qty=nextQty;saveCart();renderCart();
 }
 
 function removeItem(id){
  cart=cart.filter(x=>String(x.id)!==String(id));
- saveCart();
- renderCart();
+ saveCart();renderCart();
 }
 
 function clearCart(){
  if(!cart.length)return;
-
  if(!confirm("Are you sure you want to clear your entire cart?"))return;
-
- cart=[];
- saveCart();
- renderCart();
-
+ cart=[];saveCart();renderCart();
  document.getElementById("orderSuccessNotice").classList.add("hidden");
 }
 
 function renderCart(){
  const container=document.getElementById("cartItems");
-
- if(!cart.length){
-  container.innerHTML="<p class='muted'>Your cart is empty.</p>";
- }else{
+ if(!cart.length)container.innerHTML="<p class='muted'>Your cart is empty.</p>";
+ else{
   container.innerHTML=cart.map(x=>`
    <div class="cart-item">
     <h3>${esc(x.name)}</h3>
@@ -675,9 +600,7 @@ function renderCart(){
     </div>
    </div>`).join("");
  }
-
  document.getElementById("cartTotal").textContent=money(total());
-
  document.getElementById("checkoutForm").classList.toggle("hidden",!cart.length||!user);
  document.getElementById("loginToOrder").classList.toggle("hidden",!cart.length||!!user);
 
@@ -688,133 +611,94 @@ function renderCart(){
 
 function populateProjectTypes(){
  const select=document.getElementById("projectType");
-
- select.innerHTML=services
-  .filter(s=>s[0]!=="pcsetup")
-  .map(s=>`<option value="${s[0]}">${s[2]} — ${money(s[4])}</option>`)
-  .join("");
-
+ select.innerHTML=services.filter(s=>s[0]!=="pcsetup")
+  .map(s=>`<option value="${s[0]}">${s[2]} — ${money(s[4])}</option>`).join("");
  calculateProjectPrice();
 }
 
 function calculateProjectPrice(){
  const type=document.getElementById("projectType").value;
  const service=services.find(s=>s[0]===type);
-
  if(!service)return null;
 
  let pages=parseInt(document.getElementById("pageCount").value,10);
-
  if(!Number.isFinite(pages))pages=5;
-
  pages=Math.max(1,Math.min(50,pages));
  document.getElementById("pageCount").value=pages;
 
  const design=document.getElementById("designLevel").value;
-
  let price=Number(service[4]);
-
  if(pages>5)price+=(pages-5)*1500;
  if(design==="Premium")price+=5000;
  if(design==="Luxury")price+=10000;
 
  const features=[...document.querySelectorAll(".project-feature:checked")]
-  .map(el=>({
-   name:el.value,
-   price:Number(el.dataset.price||0)
-  }));
-
+  .map(el=>({name:el.value,price:Number(el.dataset.price||0)}));
  features.forEach(f=>price+=f.price);
 
  document.getElementById("projectPrice").textContent=money(price);
-
  return {service,pages,design,features,price};
 }
 
 function setAuthMode(m){
  authMode=m;
-
  ["customer","admin","signup"].forEach(x=>{
   const el=document.getElementById(x+"Tab");
   el.classList.toggle("active",x===m);
   el.classList.toggle("outline",x!==m);
  });
-
  document.getElementById("authModeLabel").textContent=
-  m==="admin"?"ADMIN LOGIN":
-  m==="signup"?"CREATE CUSTOMER ACCOUNT":"CUSTOMER LOGIN";
-
- document.getElementById("authAction").textContent=
-  m==="signup"?"Create Account":"Login";
-
+  m==="admin"?"ADMIN LOGIN":m==="signup"?"CREATE CUSTOMER ACCOUNT":"CUSTOMER LOGIN";
+ document.getElementById("authAction").textContent=m==="signup"?"Create Account":"Login";
  document.getElementById("authMsg").innerHTML="";
 }
 
 function friendlyError(error){
  const msg=error?.message||String(error);
-
  if(/invalid api key|api key/i.test(msg)){
   return "Invalid API key. Supabase Dashboard se isi project ki Publishable key copy karo.";
  }
-
  return msg;
 }
 
 async function authAction(){
- if(!db){
-  say("authMsg","Supabase connection is not initialized. Check project URL and API key.",true);
-  return;
- }
+ if(!db){say("authMsg","Supabase connection is not initialized. Check project URL and API key.",true);return;}
 
  const email=document.getElementById("authEmail").value.trim().toLowerCase();
  const password=document.getElementById("authPassword").value;
 
  if(!email||password.length<6){
-  say("authMsg","Enter a valid email and password of at least 6 characters.",true);
-  return;
+  say("authMsg","Enter a valid email and password of at least 6 characters.",true);return;
  }
-
  if(authMode==="admin"&&!ADMIN_EMAILS.includes(email)){
-  say("authMsg","Admin Login is only for approved admin email addresses.",true);
-  return;
+  say("authMsg","Admin Login is only for approved admin email addresses.",true);return;
  }
 
  const button=document.getElementById("authAction");
- button.disabled=true;
- button.textContent="Please wait...";
+ button.disabled=true;button.textContent="Please wait...";
 
  try{
   if(authMode==="signup"){
    const result=await db.auth.signUp({
-    email,
-    password,
+    email,password,
     options:{emailRedirectTo:location.origin+location.pathname}
    });
-
    if(result.error)say("authMsg",result.error.message,true);
    else say("authMsg","Account created. Check your email for verification, then login.");
-
    return;
   }
 
   const result=await db.auth.signInWithPassword({email,password});
-
-  if(result.error){
-   say("authMsg",result.error.message,true);
-   return;
-  }
+  if(result.error){say("authMsg",result.error.message,true);return;}
 
   await refreshAuth();
 
   if(authMode==="admin"&&role!=="admin"){
-   await db.auth.signOut();
-   await refreshAuth();
+   await db.auth.signOut();await refreshAuth();
    say("authMsg","This account does not have the admin role in Supabase profiles.",true);
    return;
   }
-
   location.hash=role==="admin"?"#admin":"#my-orders";
-
  }catch(e){
   say("authMsg",friendlyError(e),true);
  }finally{
@@ -824,30 +708,19 @@ async function authAction(){
 }
 
 async function resetPassword(){
- if(!db){
-  say("authMsg","Supabase connection is not initialized.",true);
-  return;
- }
-
+ if(!db){say("authMsg","Supabase connection is not initialized.",true);return;}
  const email=document.getElementById("authEmail").value.trim();
-
- if(!email){
-  say("authMsg","Enter your email address first.",true);
-  return;
- }
+ if(!email){say("authMsg","Enter your email address first.",true);return;}
 
  const {error}=await db.auth.resetPasswordForEmail(email,{
   redirectTo:location.origin+location.pathname
  });
-
  say("authMsg",error?friendlyError(error):"Password reset email sent.",!!error);
 }
 
 async function refreshAuth(){
  if(!db)return;
-
  const {data,error}=await db.auth.getSession();
-
  if(error)console.error(error.message);
 
  user=data?.session?.user||null;
@@ -855,28 +728,23 @@ async function refreshAuth(){
 
  if(user){
   const email=(user.email||"").toLowerCase();
-
-  const {data:profile,error:profileError}=await db
-   .from("profiles")
-   .select("role")
-   .eq("id",user.id)
-   .maybeSingle();
+  const {data:profile,error:profileError}=await db.from("profiles")
+   .select("role").eq("id",user.id).maybeSingle();
 
   if(profileError)console.error("Profile role check:",profileError.message);
-
-  if(profile?.role==="admin"&&ADMIN_EMAILS.includes(email)){
-   role="admin";
-  }
+  if(profile?.role==="admin"&&ADMIN_EMAILS.includes(email))role="admin";
  }
 
  const loggedIn=!!user;
-
  document.getElementById("authPanel").classList.toggle("hidden",loggedIn);
  document.getElementById("signedInPanel").classList.toggle("hidden",!loggedIn);
  document.getElementById("signedInEmail").textContent=user?.email||"";
  document.getElementById("signedInRole").textContent=role==="admin"?"Administrator":"Customer";
  document.getElementById("dashboardBtn").textContent=role==="admin"?"Open Admin Dashboard":"My Orders";
  document.getElementById("accountNav").textContent=loggedIn?"My Account":"Login";
+
+ const myOrdersNav=document.getElementById("myOrdersNav");
+ if(myOrdersNav)myOrdersNav.style.display=loggedIn&&role==="customer"?"inline":"none";
 
  renderCart();
 }
@@ -887,48 +755,25 @@ function openDashboard(){
 
 async function changeAccount(){
  if(!db)return;
-
  const {error}=await db.auth.signOut();
-
- if(error){
-  alert(error.message);
-  return;
- }
-
+ if(error){alert(error.message);return;}
  await refreshAuth();
-
  document.getElementById("authEmail").value="";
  document.getElementById("authPassword").value="";
-
- setAuthMode("customer");
- location.hash="#account";
+ setAuthMode("customer");location.hash="#account";
 }
 
 async function logout(){
  if(!db)return;
-
  const {error}=await db.auth.signOut();
-
- if(error){
-  alert(error.message);
-  return;
- }
-
+ if(error){alert(error.message);return;}
  await refreshAuth();
- setAuthMode("customer");
- location.hash="#account";
+ setAuthMode("customer");location.hash="#account";
 }
 
 async function placeOrder(){
- if(!db||!user){
-  say("checkoutMsg","Please login first.",true);
-  return;
- }
-
- if(!cart.length){
-  say("checkoutMsg","Your cart is empty.",true);
-  return;
- }
+ if(!db||!user){say("checkoutMsg","Please login first.",true);return;}
+ if(!cart.length){say("checkoutMsg","Your cart is empty.",true);return;}
 
  const name=document.getElementById("customerName").value.trim();
  const email=document.getElementById("customerEmail").value.trim().toLowerCase();
@@ -937,39 +782,32 @@ async function placeOrder(){
  const file=document.getElementById("receiptFile").files[0];
 
  if(!name||!email||!phone||!requirements||!file){
-  say("checkoutMsg","Please fill your name, email, phone, requirements and upload receipt.",true);
-  return;
+  say("checkoutMsg","Please fill your name, email, phone, requirements and upload receipt.",true);return;
  }
-
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-  say("checkoutMsg","Please enter a valid email address.",true);
-  return;
+  say("checkoutMsg","Please enter a valid email address.",true);return;
  }
-
  if(file.size>5*1024*1024){
-  say("checkoutMsg","Receipt must be 5 MB or smaller.",true);
-  return;
+  say("checkoutMsg","Receipt must be 5 MB or smaller.",true);return;
  }
-
  if(!["image/jpeg","image/png","image/webp","application/pdf"].includes(file.type)){
-  say("checkoutMsg","Please upload JPG, PNG, WEBP or PDF.",true);
-  return;
+  say("checkoutMsg","Please upload JPG, PNG, WEBP or PDF.",true);return;
  }
 
  const btn=document.getElementById("submitOrderBtn");
- btn.disabled=true;
- btn.textContent="Submitting...";
+ btn.disabled=true;btn.textContent="Submitting...";
+
+ let uploadedPath=null;
 
  try{
   const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");
   const path=user.id+"/"+crypto.randomUUID()+"."+ext;
 
   const up=await db.storage.from(BUCKET).upload(path,file,{
-   upsert:false,
-   contentType:file.type
+   upsert:false,contentType:file.type
   });
-
   if(up.error)throw up.error;
+  uploadedPath=path;
 
   const payload={
    customer_id:user.id,
@@ -977,13 +815,10 @@ async function placeOrder(){
    customer_name:name,
    phone:phone,
    business_name:document.getElementById("businessName").value.trim(),
-   requirements:requirements,
+   requirements,
    items:cart.map(x=>({
-    id:x.id,
-    name:x.name,
-    unit_price:x.price,
-    quantity:x.qty,
-    description:x.description
+    id:x.id,name:x.name,unit_price:x.price,
+    quantity:x.qty,description:x.description
    })),
    total:total(),
    payment_method:document.getElementById("paymentMethod").value,
@@ -993,70 +828,47 @@ async function placeOrder(){
   };
 
   const ins=await db.from("studio_orders").insert(payload).select().single();
+  if(ins.error)throw ins.error;
 
-  if(ins.error){
-   await db.storage.from(BUCKET).remove([path]);
-   throw ins.error;
-  }
-
-  cart=[];
-  saveCart();
-  renderCart();
-
+  cart=[];saveCart();renderCart();
   document.getElementById("receiptFile").value="";
   document.getElementById("customerName").value="";
   document.getElementById("customerPhone").value="";
   document.getElementById("businessName").value="";
   document.getElementById("requirements").value="";
   document.getElementById("checkoutMsg").innerHTML="";
-
   document.getElementById("orderSuccessNotice").classList.remove("hidden");
 
   say("checkoutMsg","Order submitted successfully! Your order ID is "+ins.data.id+".");
-
   await loadMyOrders();
 
  }catch(e){
+  if(uploadedPath)await db.storage.from(BUCKET).remove([uploadedPath]);
   say("checkoutMsg","Could not submit order: "+friendlyError(e),true);
  }finally{
-  btn.disabled=false;
-  btn.textContent="Submit Order";
+  btn.disabled=false;btn.textContent="Submit Order";
  }
 }
 
-/* UPDATED: Every order is displayed in its own separate card */
 function orderHtml(o,admin){
  const items=Array.isArray(o.items)?o.items:[];
+ const itemHTML=items.length?items.map(x=>`
+  <div class="order-item">
+   <b>${esc(x.name||"Service")}</b>
+   <p class="muted">${esc(x.description||"")}</p>
+   <p>Quantity: <b>${Number(x.quantity)||1}</b> × Price: <b>${money(x.unit_price)}</b></p>
+   <p>Item Total: <b class="gold">${money((Number(x.unit_price)||0)*(Number(x.quantity)||1))}</b></p>
+  </div>`).join(""):"<p class='muted'>No item details available.</p>";
 
- const itemHTML=items.length
-  ?items.map(x=>`
-    <div class="order-item">
-     <b>${esc(x.name||"Service")}</b>
-     <p class="muted">${esc(x.description||"")}</p>
-     <p>
-      Quantity: <b>${Number(x.quantity)||1}</b>
-      &nbsp; × &nbsp;
-      Price: <b>${money(x.unit_price)}</b>
-     </p>
-     <p>Item Total: <b class="gold">${money((Number(x.unit_price)||0)*(Number(x.quantity)||1))}</b></p>
-    </div>
-   `).join("")
-  :"<p class='muted'>No item details available.</p>";
-
- const date=o.created_at
-  ?new Date(o.created_at).toLocaleString()
-  :"Date unavailable";
+ const date=o.created_at?new Date(o.created_at).toLocaleString():"Date unavailable";
 
  return `
  <article class="order">
-
   <div class="admin-order-heading">
    <h3>ORDER #${esc(o.id)}</h3>
    <span class="status">${esc(o.status||"New")}</span>
   </div>
-
   <p class="muted">Order Date: ${esc(date)}</p>
-
   <hr class="order-divider">
 
   ${admin?`
@@ -1069,33 +881,23 @@ function orderHtml(o,admin){
   `:""}
 
   <h3>Ordered Services</h3>
-  <div class="order-items">
-   ${itemHTML}
-  </div>
-
+  <div class="order-items">${itemHTML}</div>
   <h3>Project Requirements</h3>
-  <div class="order-items">
-   ${esc(o.requirements||"No requirements provided.")}
-  </div>
-
+  <div class="order-items">${esc(o.requirements||"No requirements provided.")}</div>
   <div class="order-total">
    <p><b>Order Total</b></p>
    <strong>${money(o.total)}</strong>
   </div>
-
   <h3>Payment Information</h3>
   <p><b>Payment Method:</b> ${esc(o.payment_method||"Not provided")}</p>
   <p><b>Payment Status:</b> ${esc(o.payment_status||"Unpaid")}</p>
-
   ${o.receipt_url
-   ?`<p><a class="receipt-link" href="${o.receipt_url}" target="_blank" rel="noopener">View / Download Payment Receipt</a></p>`
+   ?`<p><a class="receipt-link" href="${esc(o.receipt_url)}" target="_blank" rel="noopener noreferrer">View / Download Payment Receipt</a></p>`
    :"<p class='muted'>No receipt link available.</p>"}
 
   ${admin?`
    <hr class="order-divider">
-
    <h3>Manage This Order</h3>
-
    <div class="field">
     <label>Order Status</label>
     <select id="st-${esc(o.id)}">
@@ -1104,7 +906,6 @@ function orderHtml(o,admin){
      ).join("")}
     </select>
    </div>
-
    <div class="field">
     <label>Payment Status</label>
     <select id="ps-${esc(o.id)}">
@@ -1113,17 +914,12 @@ function orderHtml(o,admin){
      ).join("")}
     </select>
    </div>
-
    <div class="actions">
     <button onclick="updateOrder('${esc(o.id)}')">Save Order Update</button>
-    <a class="btn outline"
-     href="https://wa.me/${String(o.phone||"").replace(/\D/g,"")}"
-     target="_blank" rel="noopener">WhatsApp Customer</a>
+    <a class="btn outline" href="https://wa.me/${String(o.phone||"").replace(/\D/g,"")}" target="_blank" rel="noopener noreferrer">WhatsApp Customer</a>
    </div>
   `:""}
-
- </article>
- `;
+ </article>`;
 }
 
 async function attachReceiptUrls(rows){
@@ -1138,48 +934,37 @@ async function attachReceiptUrls(rows){
 
 async function loadMyOrders(){
  if(!user||!db||role!=="customer")return;
-
  const el=document.getElementById("myOrders");
- el.textContent="Loading...";
+ el.innerHTML="<p class='muted'>Loading your orders...</p>";
 
  const {data,error}=await db.from("studio_orders")
-  .select("*")
-  .eq("customer_id",user.id)
+  .select("*").eq("customer_id",user.id)
   .order("created_at",{ascending:false});
 
- if(error){
-  el.textContent=error.message;
-  return;
- }
+ if(error){el.textContent=error.message;return;}
 
- await attachReceiptUrls(data);
-
- el.innerHTML=data.length
+ await attachReceiptUrls(data||[]);
+ el.innerHTML=data?.length
   ?data.map(o=>orderHtml(o,false)).join("")
-  :"<p class='muted'>No orders yet.</p>";
+  :"<p class='muted'>No orders yet. Your submitted orders will appear here.</p>";
 }
 
-/* Admin: each database order gets its own separate card */
 async function loadAdminOrders(){
  if(!user||role!=="admin"||!db)return;
-
  const el=document.getElementById("adminOrders");
  el.innerHTML="<p class='muted'>Loading orders...</p>";
 
  const {data,error}=await db.from("studio_orders")
-  .select("*")
-  .order("created_at",{ascending:false});
+  .select("*").order("created_at",{ascending:false});
 
  if(error){
   el.innerHTML="<div class='notice error'>Could not load orders: "+esc(error.message)+"</div>";
   return;
  }
 
- await attachReceiptUrls(data);
-
- if(!data||!data.length){
-  el.innerHTML="<p class='muted'>No orders received yet.</p>";
-  return;
+ await attachReceiptUrls(data||[]);
+ if(!data?.length){
+  el.innerHTML="<p class='muted'>No orders received yet.</p>";return;
  }
 
  el.innerHTML=`
@@ -1193,27 +978,15 @@ async function loadAdminOrders(){
 
 async function updateOrder(id){
  if(!db||!user||role!=="admin")return;
-
  const statusEl=document.getElementById("st-"+id);
  const paymentEl=document.getElementById("ps-"+id);
-
- if(!statusEl||!paymentEl){
-  alert("Order controls not found. Refresh orders and try again.");
-  return;
- }
-
- const status=statusEl.value;
- const payment_status=paymentEl.value;
+ if(!statusEl||!paymentEl){alert("Order controls not found. Refresh orders and try again.");return;}
 
  const {error}=await db.from("studio_orders")
-  .update({status,payment_status})
+  .update({status:statusEl.value,payment_status:paymentEl.value})
   .eq("id",id);
 
- if(error){
-  alert("Update failed: "+error.message);
-  return;
- }
-
+ if(error){alert("Update failed: "+error.message);return;}
  alert("Order updated successfully.");
  await loadAdminOrders();
 }
@@ -1241,29 +1014,28 @@ if(!window.supabase||!window.supabase.createClient){
   refreshAuth().then(handleRoute).catch(e=>{
    say("authMsg",friendlyError(e),true);
   });
-
  }catch(e){
   say("authMsg",friendlyError(e),true);
  }
 }
- // FIX: Make all button functions globally accessible
-window.addCart = addCart;
-window.addConfiguredProject = addConfiguredProject;
-window.qty = qty;
-window.removeItem = removeItem;
-window.clearCart = clearCart;
-window.calculateProjectPrice = calculateProjectPrice;
-window.setAuthMode = setAuthMode;
-window.authAction = authAction;
-window.resetPassword = resetPassword;
-window.openDashboard = openDashboard;
-window.changeAccount = changeAccount;
-window.logout = logout;
-window.placeOrder = placeOrder;
-window.loadAdminOrders = loadAdminOrders;
-window.updateOrder = updateOrder;
 
-// Refresh cart and services
+window.addCart=addCart;
+window.addConfiguredProject=addConfiguredProject;
+window.qty=qty;
+window.removeItem=removeItem;
+window.clearCart=clearCart;
+window.calculateProjectPrice=calculateProjectPrice;
+window.setAuthMode=setAuthMode;
+window.authAction=authAction;
+window.resetPassword=resetPassword;
+window.openDashboard=openDashboard;
+window.changeAccount=changeAccount;
+window.logout=logout;
+window.placeOrder=placeOrder;
+window.loadMyOrders=loadMyOrders;
+window.loadAdminOrders=loadAdminOrders;
+window.updateOrder=updateOrder;
+
 renderServices();
 renderCart();
 saveCart();

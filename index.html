@@ -1246,6 +1246,27 @@ if(!window.supabase||!window.supabase.createClient){
   say("authMsg",friendlyError(e),true);
  }
 }
+ // FIX: Make all button functions globally accessible
+window.addCart = addCart;
+window.addConfiguredProject = addConfiguredProject;
+window.qty = qty;
+window.removeItem = removeItem;
+window.clearCart = clearCart;
+window.calculateProjectPrice = calculateProjectPrice;
+window.setAuthMode = setAuthMode;
+window.authAction = authAction;
+window.resetPassword = resetPassword;
+window.openDashboard = openDashboard;
+window.changeAccount = changeAccount;
+window.logout = logout;
+window.placeOrder = placeOrder;
+window.loadAdminOrders = loadAdminOrders;
+window.updateOrder = updateOrder;
+
+// Refresh cart and services
+renderServices();
+renderCart();
+saveCart();
 </script>
 </body>
 </html>

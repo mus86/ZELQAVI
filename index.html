@@ -840,6 +840,7 @@ async function placeOrder(){
   document.getElementById("orderSuccessNotice").classList.remove("hidden");
 
   say("checkoutMsg","Order submitted successfully! Your order ID is "+ins.data.id+".");
+  location.hash="#my-orders";
   await loadMyOrders();
 
  }catch(e){

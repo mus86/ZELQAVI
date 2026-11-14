@@ -24,21 +24,23 @@ header{
  display:flex;justify-content:space-between;align-items:center;
  flex-wrap:wrap;gap:15px
 }
-.brand{font-size:20px;font-weight:bold;color:var(--gold)}
-
 .brand{
  display:flex;
  align-items:center;
- gap:10px;
+ gap:12px;
  font-size:20px;
  font-weight:bold;
  color:var(--gold);
+ white-space:nowrap;
+ flex-shrink:0;
 }
 
 .brand-logo{
+ display:block;
  width:55px;
  height:55px;
  object-fit:contain;
+ flex-shrink:0;
  border-radius:8px;
 }
 nav{display:flex;gap:15px;flex-wrap:wrap}
@@ -146,8 +148,8 @@ footer b{color:var(--gold)}
 <body>
 <header>
 <a class="brand" href="#home">
- <img src="logo.png" alt="ZELQAVI Logo" class="brand-logo">
- ZELQAVI WEB STUDIO
+ <img src="https://mus86.github.io/ZELQAVI/logo.png" alt="ZELQAVI Logo" class="brand-logo">
+ <span>ZELQAVI WEB STUDIO</span>
 </a>
  <nav>
   <a href="#home" data-page="home">Home</a>

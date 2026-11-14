@@ -136,7 +136,7 @@ footer b{color:var(--gold)}
   <a href="#portfolio" data-page="portfolio">Portfolio</a>
   <a href="#cart" data-page="cart">Cart (<span id="cartCount">0</span>)</a>
   <a href="#account" data-page="account" id="accountNav">Login</a>
-  <a href="#my-orders" data-page="my-orders" id="myOrdersNav" style="display:none">My Orders</a>
+ <a href="#my-orders" data-page="my-orders" id="myOrdersNav">My Orders</a>
   <a href="#contact" data-page="contact">Contact</a>
  </nav>
 </header>
@@ -164,7 +164,25 @@ footer b{color:var(--gold)}
   <h2>Our <span class="gold">Services</span></h2>
   <p class="muted">Choose services and add them to your cart.</p>
  </div>
- <div class="grid" id="serviceGrid"></div>
+
+<div style="text-align:center;margin:20px auto 30px">
+ <a class="btn" href="#cart">
+  Order a Customized Website
+ </a>
+</div>
+
+<div class="grid" id="serviceGrid"></div>
+
+ <div class="panel" style="max-width:700px;margin:35px auto;text-align:center">
+  <h2 class="gold">Need a Customized Website?</h2>
+  <p class="muted">
+   Create your own website order. Select website type, number of pages,
+   design and additional features according to your requirements.
+  </p>
+  <a class="btn" href="#cart" style="margin-top:12px">
+   Order a Customized Website
+  </a>
+ </div>
 </section>
 
 <section class="page band hidden" id="portfolio">
@@ -743,8 +761,8 @@ async function refreshAuth(){
  document.getElementById("dashboardBtn").textContent=role==="admin"?"Open Admin Dashboard":"My Orders";
  document.getElementById("accountNav").textContent=loggedIn?"My Account":"Login";
 
- const myOrdersNav=document.getElementById("myOrdersNav");
- if(myOrdersNav)myOrdersNav.style.display=loggedIn&&role==="customer"?"inline":"none";
+const myOrdersNav=document.getElementById("myOrdersNav");
+if(myOrdersNav)myOrdersNav.style.display="inline";
 
  renderCart();
 }

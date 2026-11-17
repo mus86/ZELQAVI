@@ -1106,22 +1106,36 @@ function filterAdminOrders(status){
 }
 
 async function deleteOrder(id){
- if(!db||!user||role!=="admin")return;
+ if(!db||!user||role!=="admin"){
+  alert("Admin access required.");
+  return;
+ }
 
  if(!confirm("Are you sure you want to permanently delete this order?"))return;
 
  const order=adminOrdersCache.find(o=>String(o.id)===String(id));
 
- const {error}=await db.from("studio_orders")
-  .delete().eq("id",id);
+ const {data,error}=await db.from("studio_orders")
+  .delete()
+  .eq("id",id)
+  .select("id");
 
  if(error){
   alert("Delete failed: "+error.message);
   return;
  }
 
+ if(!data || data.length===0){
+  alert("Order delete nahi hua! Supabase DELETE permission check karo.");
+  return;
+ }
+
  if(order?.receipt_path){
-  await db.storage.from(BUCKET).remove([order.receipt_path]);
+  const {error:storageError}=await db.storage.from(BUCKET).remove([order.receipt_path]);
+
+  if(storageError){
+   alert("Order delete ho gaya, lekin receipt file delete nahi hui: "+storageError.message);
+  }
  }
 
  alert("Order deleted successfully!");

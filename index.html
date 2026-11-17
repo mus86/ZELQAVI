@@ -978,7 +978,7 @@ function orderHtml(o,admin){
    <div class="field">
     <label>Order Status</label>
     <select id="st-${esc(o.id)}">
-    ${["New","Pending","In Progress","Delivered","Cancelled","Under Review","Completed"].map(s=>
+   ${["New","Pending","In Progress","Delivered","Completed","Cancelled","Under Review"].map(s=>
   `<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`
 ).join("")}
     </select>
@@ -993,6 +993,7 @@ function orderHtml(o,admin){
    </div>
    <div class="actions">
     <button onclick="updateOrder('${esc(o.id)}')">Save Order Update</button>
+    <button class="danger" onclick="deleteOrder('${esc(o.id)}')">Delete Order</button>
     <a class="btn outline" href="https://wa.me/${String(o.phone||"").replace(/\D/g,"")}" target="_blank" rel="noopener noreferrer">WhatsApp Customer</a>
    </div>
   `:""}
@@ -1026,6 +1027,9 @@ async function loadMyOrders(){
   :"<p class='muted'>No orders yet. Your submitted orders will appear here.</p>";
 }
 
+let adminOrdersCache = [];
+let adminOrderFilter = "All";
+
 async function loadAdminOrders(){
  if(!user||role!=="admin"||!db)return;
 
@@ -1041,78 +1045,87 @@ async function loadAdminOrders(){
  }
 
  await attachReceiptUrls(data||[]);
+ adminOrdersCache=data||[];
 
- if(!data?.length){
-  el.innerHTML="<p class='muted'>No orders received yet.</p>";
-  return;
- }
+ renderAdminOrders();
+}
 
- const groups=[
-  {name:"New",statuses:["New"]},
-  {name:"Pending",statuses:["Pending","Under Review"]},
-  {name:"In Progress",statuses:["In Progress"]},
-  {name:"Delivered",statuses:["Delivered","Completed"]},
-  {name:"Cancelled",statuses:["Cancelled"]}
+function renderAdminOrders(){
+ const el=document.getElementById("adminOrders");
+ const data=adminOrdersCache;
+
+ const statuses=[
+  "New",
+  "Pending",
+  "In Progress",
+  "Delivered",
+  "Completed",
+  "Cancelled",
+  "Under Review"
  ];
 
- const totalAmount=data.reduce((sum,o)=>sum+(Number(o.total)||0),0);
+ const buttons=[
+  {name:"All",count:data.length},
+  ...statuses.map(name=>({
+   name,
+   count:data.filter(o=>(o.status||"New")===name).length
+  }))
+ ];
 
  let html=`
   <div style="margin:20px 0">
-   <h2 class="gold">Admin Orders Overview</h2>
-   <div class="admin-summary">
-    <div class="admin-summary-card">
-     <h3>All Orders</h3>
-     <strong>${data.length}</strong>
-     <p>Total Orders</p>
-    </div>
-    <div class="admin-summary-card">
-     <h3>Total Amount</h3>
-     <strong>${money(totalAmount)}</strong>
-     <p>All Customer Orders</p>
-    </div>
+   <h2 class="gold">Orders Management</h2>
+   <p class="muted">Total Orders: <b>${data.length}</b></p>
+
+   <div class="actions" style="margin:20px 0">
+    ${buttons.map(b=>`
+     <button class="${adminOrderFilter===b.name?"":"outline"}"
+      onclick="filterAdminOrders('${b.name}')">
+      ${b.name} (${b.count})
+     </button>
+    `).join("")}
    </div>
   </div>
  `;
 
- groups.forEach(group=>{
-  const orders=data.filter(o=>group.statuses.includes(o.status||"New"));
-  const amount=orders.reduce((sum,o)=>sum+(Number(o.total)||0),0);
-
-  html+=`
-   <div class="admin-status-section">
-    <h2>${group.name} Orders</h2>
-    <div class="admin-summary">
-     <div class="admin-summary-card">
-      <h3>Order Count</h3>
-      <strong>${orders.length}</strong>
-     </div>
-     <div class="admin-summary-card">
-      <h3>Total Amount</h3>
-      <strong>${money(amount)}</strong>
-     </div>
-    </div>
-    ${orders.length
-     ?orders.map(o=>orderHtml(o,true)).join("")
-     :"<p class='muted'>No orders in this section.</p>"}
-   </div>
-  `;
+ const filtered=data.filter(o=>{
+  return adminOrderFilter==="All"||
+   (o.status||"New")===adminOrderFilter;
  });
 
- const other=data.filter(o=>
-  !groups.some(g=>g.statuses.includes(o.status||"New"))
- );
-
- if(other.length){
-  html+=`
-   <div class="admin-status-section">
-    <h2>Other / Previous Status Orders</h2>
-    ${other.map(o=>orderHtml(o,true)).join("")}
-   </div>
-  `;
- }
+ html+=filtered.length
+  ?filtered.map(o=>orderHtml(o,true)).join("")
+  :"<p class='muted'>No orders in this section.</p>";
 
  el.innerHTML=html;
+}
+
+function filterAdminOrders(status){
+ adminOrderFilter=status;
+ renderAdminOrders();
+}
+
+async function deleteOrder(id){
+ if(!db||!user||role!=="admin")return;
+
+ if(!confirm("Are you sure you want to permanently delete this order?"))return;
+
+ const order=adminOrdersCache.find(o=>String(o.id)===String(id));
+
+ const {error}=await db.from("studio_orders")
+  .delete().eq("id",id);
+
+ if(error){
+  alert("Delete failed: "+error.message);
+  return;
+ }
+
+ if(order?.receipt_path){
+  await db.storage.from(BUCKET).remove([order.receipt_path]);
+ }
+
+ alert("Order deleted successfully!");
+ await loadAdminOrders();
 }
 
 async function updateOrder(id){
@@ -1175,6 +1188,8 @@ window.loadMyOrders=loadMyOrders;
 window.loadAdminOrders=loadAdminOrders;
 window.updateOrder=updateOrder;
 
+ window.filterAdminOrders=filterAdminOrders;
+window.deleteOrder=deleteOrder;
 renderServices();
 renderCart();
 saveCart();

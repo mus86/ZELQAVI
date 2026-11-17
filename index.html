@@ -137,6 +137,41 @@ textarea{min-height:100px}
 footer{text-align:center;padding:28px;background:#050609;color:#9098a5}
 footer b{color:var(--gold)}
 .receipt-link{color:var(--gold);text-decoration:underline;font-weight:bold}
+ .admin-summary{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:12px;
+ margin:20px 0;
+}
+.admin-summary-card{
+ background:var(--panel);
+ border:1px solid var(--gold);
+ border-radius:10px;
+ padding:16px;
+}
+.admin-summary-card h3{
+ color:var(--gold);
+ margin:0 0 8px;
+ font-size:17px;
+}
+.admin-summary-card p{
+ margin:5px 0;
+ color:var(--muted);
+}
+.admin-summary-card strong{
+ font-size:23px;
+ color:var(--gold);
+}
+.admin-status-section{
+ margin:25px 0;
+ padding:18px;
+ background:#10141c;
+ border:1px solid var(--line);
+ border-radius:12px;
+}
+.admin-status-section h2{
+ color:var(--gold);
+}
 @media(max-width:760px){
  .hero{grid-template-columns:1fr;text-align:center}
  .cart-layout{grid-template-columns:1fr}
@@ -943,9 +978,9 @@ function orderHtml(o,admin){
    <div class="field">
     <label>Order Status</label>
     <select id="st-${esc(o.id)}">
-     ${["New","Under Review","In Progress","Completed","Cancelled"].map(s=>
-      `<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`
-     ).join("")}
+    ${["New","Pending","In Progress","Delivered","Cancelled","Under Review","Completed"].map(s=>
+  `<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`
+).join("")}
     </select>
    </div>
    <div class="field">
@@ -993,6 +1028,7 @@ async function loadMyOrders(){
 
 async function loadAdminOrders(){
  if(!user||role!=="admin"||!db)return;
+
  const el=document.getElementById("adminOrders");
  el.innerHTML="<p class='muted'>Loading orders...</p>";
 
@@ -1005,17 +1041,78 @@ async function loadAdminOrders(){
  }
 
  await attachReceiptUrls(data||[]);
+
  if(!data?.length){
-  el.innerHTML="<p class='muted'>No orders received yet.</p>";return;
+  el.innerHTML="<p class='muted'>No orders received yet.</p>";
+  return;
  }
 
- el.innerHTML=`
+ const groups=[
+  {name:"New",statuses:["New"]},
+  {name:"Pending",statuses:["Pending","Under Review"]},
+  {name:"In Progress",statuses:["In Progress"]},
+  {name:"Delivered",statuses:["Delivered","Completed"]},
+  {name:"Cancelled",statuses:["Cancelled"]}
+ ];
+
+ const totalAmount=data.reduce((sum,o)=>sum+(Number(o.total)||0),0);
+
+ let html=`
   <div style="margin:20px 0">
-   <h2 class="gold">All Customer Orders</h2>
-   <p class="muted">Total Orders: ${data.length}</p>
+   <h2 class="gold">Admin Orders Overview</h2>
+   <div class="admin-summary">
+    <div class="admin-summary-card">
+     <h3>All Orders</h3>
+     <strong>${data.length}</strong>
+     <p>Total Orders</p>
+    </div>
+    <div class="admin-summary-card">
+     <h3>Total Amount</h3>
+     <strong>${money(totalAmount)}</strong>
+     <p>All Customer Orders</p>
+    </div>
+   </div>
   </div>
-  ${data.map(o=>orderHtml(o,true)).join("")}
  `;
+
+ groups.forEach(group=>{
+  const orders=data.filter(o=>group.statuses.includes(o.status||"New"));
+  const amount=orders.reduce((sum,o)=>sum+(Number(o.total)||0),0);
+
+  html+=`
+   <div class="admin-status-section">
+    <h2>${group.name} Orders</h2>
+    <div class="admin-summary">
+     <div class="admin-summary-card">
+      <h3>Order Count</h3>
+      <strong>${orders.length}</strong>
+     </div>
+     <div class="admin-summary-card">
+      <h3>Total Amount</h3>
+      <strong>${money(amount)}</strong>
+     </div>
+    </div>
+    ${orders.length
+     ?orders.map(o=>orderHtml(o,true)).join("")
+     :"<p class='muted'>No orders in this section.</p>"}
+   </div>
+  `;
+ });
+
+ const other=data.filter(o=>
+  !groups.some(g=>g.statuses.includes(o.status||"New"))
+ );
+
+ if(other.length){
+  html+=`
+   <div class="admin-status-section">
+    <h2>Other / Previous Status Orders</h2>
+    ${other.map(o=>orderHtml(o,true)).join("")}
+   </div>
+  `;
+ }
+
+ el.innerHTML=html;
 }
 
 async function updateOrder(id){

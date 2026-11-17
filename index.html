@@ -645,6 +645,305 @@ footer b{color:var(--gold)}
  .contact-luxury h3{font-size:21px;}
 }
 
+/* ===== ZELQAVI BLACK & GOLD LUXURY THEME ===== */
+
+/* Premium typography */
+body {
+ font-family: "Georgia", "Times New Roman", serif;
+ background:
+  radial-gradient(ellipse at top left,#d8b45e0c,transparent 40%),
+  #080a0e;
+ letter-spacing:.15px;
+}
+
+p, label, input, select, textarea, button, small,
+nav, .muted, .status {
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main section headings */
+.section-head h2,
+#services h2,
+#cart h2,
+#account h2,
+#customerDashboard h2,
+#adminDashboard h2 {
+ font-family: Georgia,serif;
+ letter-spacing:1px;
+ color:#f4f0e6;
+}
+
+.section-head p {
+ color:#aeb6c4;
+}
+
+/* Luxury section backgrounds */
+#services,
+#cart,
+#account,
+#customerDashboard,
+#adminDashboard {
+ background:
+  radial-gradient(ellipse at 85% 5%,#d8b45e14,transparent 35%),
+  radial-gradient(ellipse at 10% 90%,#aeb6c410,transparent 35%),
+  linear-gradient(135deg,#050608,#11151e 55%,#050608);
+ border-top:1px solid #8c713d;
+}
+
+/* Premium panels */
+#services .panel,
+#cart .panel,
+#account .panel,
+#customerDashboard .panel,
+#adminDashboard .panel {
+ background:linear-gradient(145deg,#1b202a,#090b10);
+ border:1px solid #8c713d;
+ border-radius:15px;
+ box-shadow:0 14px 40px #0009,0 0 22px #d8b45e0d;
+}
+
+/* Service cards */
+#services .card {
+ position:relative;
+ overflow:hidden;
+ background:
+  radial-gradient(circle at top right,#d8b45e16,transparent 45%),
+  linear-gradient(145deg,#1b202a,#090b10);
+ border:1px solid #66532f;
+ border-radius:14px;
+ box-shadow:0 10px 28px #0008;
+ transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+
+#services .card:hover {
+ transform:translateY(-6px);
+ border-color:#e6c77e;
+ box-shadow:0 16px 35px #000a,0 0 22px #d8b45e20;
+}
+
+#services .card h3 {
+ font-family:Georgia,serif;
+ color:#e6c77e;
+ font-size:21px;
+ letter-spacing:.4px;
+}
+
+#services .card p {
+ color:#c1c6d0;
+ line-height:1.8;
+}
+
+#services .card > div {
+ color:#e8d5a5;
+}
+
+/* Cart items */
+.cart-item {
+ background:linear-gradient(145deg,#1b202a,#0a0d13);
+ border:1px solid #80683a;
+ border-radius:12px;
+ padding:20px;
+ box-shadow:0 8px 22px #0007;
+ transition:.25s ease;
+}
+
+.cart-item:hover {
+ border-color:#e6c77e;
+ box-shadow:0 0 20px #d8b45e18;
+}
+
+.cart-item h3 {
+ font-family:Georgia,serif;
+ color:#e6c77e;
+ font-size:21px;
+}
+
+.cart-item p {
+ color:#c2c7d0;
+}
+
+/* Order cards */
+.order {
+ background:
+  radial-gradient(ellipse at top right,#d8b45e12,transparent 40%),
+  linear-gradient(145deg,#1a202b,#090b10);
+ border:1px solid #a98a4c;
+ border-radius:15px;
+ box-shadow:0 14px 38px #0009,0 0 20px #d8b45e0d;
+ padding:25px;
+ transition:.25s ease;
+}
+
+.order:hover {
+ border-color:#e6c77e;
+ box-shadow:0 16px 42px #000a,0 0 24px #d8b45e18;
+}
+
+.order h3 {
+ font-family:Georgia,serif;
+ color:#e6c77e;
+ letter-spacing:.5px;
+}
+
+.order p {
+ color:#d0d3da;
+}
+
+.order-divider {
+ border-top:1px solid #6b5732;
+}
+
+.order-items {
+ background:#090c12;
+ border:1px solid #5c4b2d;
+ border-radius:10px;
+}
+
+.order-item {
+ border-bottom:1px solid #343b47;
+}
+
+.order-total {
+ background:linear-gradient(120deg,#302817,#17130b);
+ border:1px solid #b08b43;
+ border-radius:10px;
+}
+
+/* Account login and dashboard */
+.auth-box {
+ border:1px solid #a98a4c !important;
+}
+
+#authModeLabel {
+ font-family:Georgia,serif;
+ font-size:20px;
+ letter-spacing:1px;
+}
+
+.tabs button {
+ border-radius:5px;
+ letter-spacing:.4px;
+}
+
+.tabs button.active {
+ background:linear-gradient(110deg,#fff0b5,#d8b45e,#b08b43);
+ color:#111;
+ border:1px solid #e6c77e;
+}
+
+/* Form fields */
+input,select,textarea {
+ background:linear-gradient(145deg,#111620,#080a0e);
+ border:1px solid #66532f;
+ border-radius:8px;
+ color:#f7f8fa;
+ transition:border-color .2s,box-shadow .2s;
+}
+
+input:focus,select:focus,textarea:focus {
+ outline:none;
+ border-color:#e6c77e;
+ box-shadow:0 0 0 3px #d8b45e18;
+}
+
+label {
+ color:#e2d4b4;
+ font-weight:600;
+}
+
+input::placeholder,textarea::placeholder {
+ color:#78818f;
+}
+
+/* Luxury buttons */
+button,.btn {
+ background:linear-gradient(110deg,#fff0b5,#d8b45e,#b08b43);
+ color:#111;
+ border:1px solid #d8b45e;
+ border-radius:5px;
+ font-weight:bold;
+ letter-spacing:.3px;
+ transition:.25s ease;
+}
+
+button:hover,.btn:hover {
+ transform:translateY(-2px);
+ box-shadow:0 7px 20px #d8b45e35;
+}
+
+button.outline,.btn.outline {
+ background:transparent;
+ color:#e6c77e;
+ border:1px solid #b9944b;
+}
+
+button.danger {
+ background:linear-gradient(110deg,#9e4545,#6c2424);
+ color:white;
+ border:1px solid #bd6666;
+}
+
+/* Order status */
+.status {
+ background:#302817;
+ color:#f0cf7c;
+ border:1px solid #80683a;
+ padding:5px 12px;
+ letter-spacing:.3px;
+}
+
+/* Admin dashboard summary */
+.admin-summary-card {
+ background:linear-gradient(145deg,#1b202a,#090b10);
+ border:1px solid #a98a4c;
+ border-radius:12px;
+ box-shadow:0 8px 22px #0007;
+}
+
+.admin-status-section {
+ background:linear-gradient(145deg,#171d27,#090b10);
+ border:1px solid #66532f;
+ border-radius:13px;
+}
+
+.admin-summary-card h3,
+.admin-status-section h2 {
+ font-family:Georgia,serif;
+ color:#e6c77e;
+}
+
+/* Notices */
+.notice {
+ border:1px solid #527451;
+ border-radius:9px;
+}
+
+.notice.error {
+ border-color:#9a4545;
+}
+
+/* Mobile spacing */
+@media(max-width:760px) {
+ .order {
+  padding:17px;
+ }
+
+ #services .card {
+  min-height:220px;
+ }
+
+ .section-head h2 {
+  font-size:30px;
+ }
+
+ #cart .panel,
+ #account .panel,
+ #customerDashboard .panel,
+ #adminDashboard .panel {
+  padding:17px;
+ }
+}
+
 </style>
 </head>
 

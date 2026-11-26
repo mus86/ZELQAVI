@@ -7,52 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TEHWZ27eBizWiWOASjYC-w3krpYZFaIRhbmq_4T1qXc">
 <title>ZELQAVI WEB STUDIO</title>
- 
-
-<!-- ZELQAVI ORGANIZATION SCHEMA -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://mus86.github.io/ZELQAVI/#organization",
-      "name": "ZELQAVI WEB STUDIO",
-      "alternateName": "Zelqavi",
-      "url": "https://mus86.github.io/ZELQAVI/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://mus86.github.io/ZELQAVI/logo.png"
-      },
-      "description": "ZELQAVI Web Studio provides professional website design, web development, online stores and custom digital solutions.",
-      "founder": {
-        "@id": "https://mus86.github.io/ZELQAVI/#founder"
-      }
-    },
-    {
-      "@type": "Person",
-      "@id": "https://mus86.github.io/ZELQAVI/#founder",
-      "name": "Muhammad Umar",
-      "jobTitle": "Founder of ZELQAVI WEB STUDIO",
-      "worksFor": {
-        "@id": "https://mus86.github.io/ZELQAVI/#organization"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://mus86.github.io/ZELQAVI/#website",
-      "url": "https://mus86.github.io/ZELQAVI/",
-      "name": "ZELQAVI WEB STUDIO",
-      "publisher": {
-        "@id": "https://mus86.github.io/ZELQAVI/#organization"
-      },
-      "inLanguage": "en"
-    }
-  ]
-}
-</script>
-<!-- END ZELQAVI ORGANIZATION SCHEMA -->
-
  <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./favicon.png">
 <link rel="icon" type="image/png" href="logo.png">
@@ -1304,8 +1258,172 @@ p,label,input,select,textarea,button,small,nav {
     height: 180px;
     background: #d4af37;
     filter: blur(100px);
+    opacity: 0;
+    animation: cinematicLight 3.5s ease forwards;
+}
 
-   <a href="#cart" data-page="cart">Cart (<span id="cartCount">0</span>)</a>
+.intro-ring {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid rgba(212,175,55,.6);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(.2);
+    animation: ringReveal 2s ease-out .6s forwards;
+}
+
+.intro-center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.intro-logo {
+    width: 145px;
+    height: 145px;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(.1) rotate(-25deg);
+    filter: drop-shadow(0 0 25px #d4af37);
+    animation: cinematicLogo 1.5s cubic-bezier(.16,1,.3,1) .4s forwards;
+}
+
+.intro-brand {
+    color: #d4af37;
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: cinematicText 1s ease 1.5s forwards;
+}
+
+.intro-caption {
+    color: #ddd;
+    font-size: 10px;
+    letter-spacing: 6px;
+    margin-top: 9px;
+    opacity: 0;
+    animation: cinematicText 1s ease 2s forwards;
+}
+
+.intro-flash {
+    position: absolute;
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(90deg,transparent,#fff,#d4af37,transparent);
+    transform: rotate(-25deg) translateX(-100%);
+    animation: cinematicFlash 1.2s ease .5s forwards;
+}
+
+@keyframes cinematicLogo {
+    0% { opacity: 0; transform: scale(.1) rotate(-25deg); }
+    60% { opacity: 1; transform: scale(1.2) rotate(5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes cinematicText {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cinematicLight {
+    0% { opacity: 0; transform: scale(.2); }
+    50% { opacity: .4; transform: scale(1.5); }
+    100% { opacity: .18; transform: scale(1); }
+}
+
+@keyframes ringReveal {
+    0% { opacity: 0; transform: scale(.2); }
+    70% { opacity: .8; transform: scale(1.4); }
+    100% { opacity: .2; transform: scale(1.8); }
+}
+
+@keyframes cinematicFlash {
+    to { transform: rotate(-25deg) translateX(100%); }
+}
+
+@media(max-width:480px) {
+    .intro-logo { width: 120px; height: 120px; }
+    .intro-brand { font-size: 22px; letter-spacing: 5px; }
+}
+
+</style>
+</head>
+
+<body>
+ 
+<!-- ZELQAVI PREMIUM APP DOWNLOAD BAR -->
+<style>
+#zel-app-bar {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:999999;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 13px;
+  background:linear-gradient(110deg,#050505,#282016,#050505);
+  border-bottom:1px solid #d8b45e;
+  box-shadow:0 3px 18px #0008;
+  font-family:Arial,sans-serif;
+}
+#zel-app-bar .app-info {
+  color:#f4dfad;
+  font-size:13px;
+  font-weight:bold;
+}
+#zel-app-bar small {
+  display:block;
+  color:#bbb;
+  font-size:10px;
+  margin-top:3px;
+}
+#zel-app-bar .app-download {
+  background:linear-gradient(135deg,#fff0b5,#d8b45e,#b08b43);
+  color:#111;
+  padding:9px 14px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+body {
+  padding-top:58px !important;
+}
+</style>
+
+<div id="zel-app-bar">
+  <div class="app-info">
+    📲 DOWNLOAD OUR APP
+    <small>Experience more with ZELQAVI</small>
+  </div>
+  <a class="app-download"
+     href="./zelqavi_web_studio.apk"
+     download="Zelqavi-Web-Studio.apk">
+    DOWNLOAD ↓
+  </a>
+</div>
+<!-- END APP DOWNLOAD BAR -->
+ 
+<header>
+<a class="brand" href="#home">
+ <img src="https://mus86.github.io/ZELQAVI/logo.png" alt="ZELQAVI Logo" class="brand-logo">
+ <span>ZELQAVI WEB STUDIO</span>
+</a>
+ <nav>
+  <a href="#home" data-page="home">Home</a>
+  <a href="#services" data-page="services">Services</a>
+  <a href="#portfolio" data-page="portfolio">Portfolio</a>
+  <a href="#cart" data-page="cart">Cart (<span id="cartCount">0</span>)</a>
   <a href="#account" data-page="account" id="accountNav">Login</a>
  <a href="#my-orders" data-page="my-orders" id="myOrdersNav">My Orders</a>
   <a href="#contact" data-page="contact">Contact</a>
